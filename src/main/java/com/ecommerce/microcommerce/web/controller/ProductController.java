@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,6 +28,25 @@ public class ProductController {
     @Autowired
     private ProductDao productDao;
 
+    //Afficher la marge
+    @ApiOperation(value = "Récupère la liste de produits avec marge")
+    @GetMapping(value = "AdminProduits")
+
+    public List<String> calculerMargeProduit() {
+
+        List<Product> produits = productDao.findAll();
+        List<String> marges = new ArrayList<>();
+        for (Product produit: produits) {
+            int marge = produit.getPrix() - produit.getPrixAchat();
+            String listeAvecMarge = produit.toString() + marge;
+            marges.add(listeAvecMarge);
+
+
+        }
+        return marges;
+
+
+    }
 
     //Récupérer la liste des produits
 
